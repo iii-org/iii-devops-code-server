@@ -8,6 +8,7 @@
 * sonarsource.sonarlint-vscode
 
 #### 資料夾說明
+* `k8s-yaml`: 部屬資料夾
 
 
 
