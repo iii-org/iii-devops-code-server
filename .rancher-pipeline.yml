@@ -10,3 +10,4 @@ stages:
         registry: 10.20.0.71:5443
       env:
         PLUGIN_INSECURE: "true"
+        
