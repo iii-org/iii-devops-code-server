@@ -1,0 +1,22 @@
+version: "2.1"
+services:
+  code-server:
+    build: ./
+    #image: ghcr.io/linuxserver/code-server
+    image: iii-devops-code-server
+    container_name: code-server
+    environment:
+      #- PUID=1000
+      #- PGID=1000
+      - PUID=0
+      - PGID=0
+      - TZ=Europe/London
+      - PASSWORD=happybear #optional
+      - SUDO_PASSWORD=happybear #optional
+      #- SUDO_PASSWORD_HASH= #optional
+      #- PROXY_DOMAIN=code-server.my.domain #optional
+    volumes:
+      - ./extensions:/config/extensions:rw
+    ports:
+      - 9443:8443
+    restart: unless-stopped
