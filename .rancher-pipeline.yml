@@ -1,0 +1,12 @@
+stages:
+  # 建立專用的 Docker Image
+  - name: Publish image
+    steps:
+    - publishImageConfig:
+        dockerfilePath: ./Dockerfile
+        buildContext: .
+        tag: ${CICD_GIT_REPO_NAME}:latest
+        pushRemote: true
+        registry: 10.20.0.71:5443
+      env:
+        PLUGIN_INSECURE: "true"
