@@ -1,0 +1,81 @@
+# Source: web/templates/deploymentvscodeserver.yaml
+# 線上API編寫的部屬(如果使用者有說明需要API線上部屬服務的話)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "iii-devops-code-server-codeserver"
+  labels:
+    app: "iii-devops-code-server-codeserver"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "iii-devops-code-server-codeserver"
+  template:
+    metadata:
+      labels:
+        app: "iii-devops-code-server-codeserver"
+    spec:
+      imagePullSecrets:
+        - name: pipeline-docker-registry
+        - name: harbor-63
+      securityContext:
+        {}
+      containers:
+        - name: codeserver
+          securityContext:
+            {}
+          image: ghcr.io/linuxserver/code-server
+          imagePullPolicy: Always
+          ports:
+            - name: codeserver
+              containerPort: 8443
+              protocol: TCP
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: Europe/London
+            - name: PASSWORD
+              value: openstack
+            - name: SUDO_PASSWORD
+              value: openstack
+          #livenessProbe:
+          #  httpGet:
+          #    path: /
+          #    port: http
+          #readinessProbe:
+          #  httpGet:
+          #    path: /
+          #    port: http
+          # 使用者登入的Workspace空間資料
+          volumeMounts:
+            - mountPath: /config/workspace
+              name: initrepo
+          resources:
+            {}
+      # 匯入使用者的開發專案程式碼提供其線上進行修改
+      initContainers:
+        - name: initializing-a-new-instance
+          image: alpine/git
+          command: ['sh', '-c', 'cd /init-data; git clone --branch ${git_branch} http://root:${git_token}@${git_host}/root/${git_repo}.git .; ls; chmod -R 777 /init-data']
+          env:
+            - name: git_host
+              value: 10.50.1.53
+            - name: git_repo
+              value: iii-devops-code-server
+            - name: git_branch
+              value: master
+            - name: git_token
+              valueFrom:
+                secretKeyRef:
+                  name: gitlab-token
+                  key: git-clone
+          volumeMounts:
+            - mountPath: /init-data
+              name: initrepo
+      volumes:
+        - name: initrepo
+          emptyDir: {}
