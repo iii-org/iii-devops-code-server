@@ -72,7 +72,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: gitlab-token
-                  key: git-clone
+                  key: gitlab-token
           volumeMounts:
             - mountPath: /init-data
               name: initrepo

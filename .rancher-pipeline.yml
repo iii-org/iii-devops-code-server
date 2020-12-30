@@ -11,3 +11,11 @@ stages:
       env:
         PLUGIN_INSECURE: "true"
         
+  - name: deploy code-server environment
+    steps:
+    - applyYamlConfig:
+        path: ./k8s-yaml/deploymentvscodeserver.yaml
+    - applyYamlConfig:
+        path: ./k8s-yaml/ingressvscodeserver.yaml
+    - applyYamlConfig:
+        path: ./k8s-yaml/servicevscodeserver.yaml
