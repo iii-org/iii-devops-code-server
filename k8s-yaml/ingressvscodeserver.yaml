@@ -8,7 +8,7 @@ metadata:
 spec:
 #
   rules:
-  - host: "vscode.master.iii-devops-code-server.10.20.0.72.xip.io"
+  - host: "vscode.master.iii-devops-code-server.10.20.0.74.xip.io"
     http:
       paths:
       - backend:

@@ -7,7 +7,7 @@ stages:
         buildContext: .
         tag: ${CICD_GIT_REPO_NAME}/code-server:latest
         pushRemote: true
-        registry: 10.20.0.71:5443
+        registry: 10.20.0.73:5443
       env:
         PLUGIN_INSECURE: "true"
         

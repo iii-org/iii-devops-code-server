@@ -25,7 +25,7 @@ spec:
         - name: codeserver
           securityContext:
             {}
-          image: ghcr.io/linuxserver/code-server
+          image: 10.20.0.71:5443/iii-devops-code-server/code-server
           imagePullPolicy: Always
           ports:
             - name: codeserver
@@ -63,7 +63,7 @@ spec:
           command: ['sh', '-c', 'cd /init-data; git clone --branch ${git_branch} http://root:${git_token}@${git_host}/root/${git_repo}.git .; ls; chmod -R 777 /init-data']
           env:
             - name: git_host
-              value: 10.50.1.53
+              value: 10.20.0.71
             - name: git_repo
               value: iii-devops-code-server
             - name: git_branch
